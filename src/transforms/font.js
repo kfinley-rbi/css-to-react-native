@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import parseFontFamily from './fontFamily'
 import {
   regExpToken,
@@ -24,40 +25,47 @@ export default tokenStream => {
   let lineHeight
   // let fontFamily;
 
-  let numStyleWeightVariantMatched = 0
-  while (numStyleWeightVariantMatched < 3 && tokenStream.hasTokens()) {
-    if (tokenStream.matches(NORMAL)) {
-      /* pass */
-    } else if (fontStyle === undefined && tokenStream.matches(STYLE)) {
-      fontStyle = tokenStream.lastValue
-    } else if (fontWeight === undefined && tokenStream.matches(WEIGHT)) {
-      fontWeight = tokenStream.lastValue
-    } else if (fontVariant === undefined && tokenStream.matches(VARIANT)) {
-      fontVariant = [tokenStream.lastValue]
-    } else {
-      break
-    }
+  // let numStyleWeightVariantMatched = 0
+  // while (numStyleWeightVariantMatched < 3 && tokenStream.hasTokens()) {
+  //   if (tokenStream.matches(NORMAL)) {
+  //     /* pass */
+  //   } else if (fontStyle === undefined && tokenStream.matches(STYLE)) {
+  //     fontStyle = tokenStream.lastValue
+  //   } else if (fontWeight === undefined && tokenStream.matches(WEIGHT)) {
+  //     fontWeight = tokenStream.lastValue
+  //   } else if (fontVariant === undefined && tokenStream.matches(VARIANT)) {
+  //     fontVariant = [tokenStream.lastValue]
+  //   } else {
+  //     break
+  //   }
 
-    tokenStream.expect(SPACE)
-    numStyleWeightVariantMatched += 1
+  //   tokenStream.expect(SPACE)
+  //   numStyleWeightVariantMatched += 1
+  // }
+
+  // const fontSize = tokenStream.expect(LENGTH, UNSUPPORTED_LENGTH_UNIT)
+
+  // if (tokenStream.matches(SLASH)) {
+  //   lineHeight = tokenStream.expect(LENGTH, UNSUPPORTED_LENGTH_UNIT)
+  // }
+
+  // tokenStream.expect(SPACE)
+
+  // const { fontFamily } = parseFontFamily(tokenStream)
+
+  // if (fontStyle === undefined) fontStyle = defaultFontStyle
+  // if (fontWeight === undefined) fontWeight = defaultFontWeight
+  // if (fontVariant === undefined) fontVariant = defaultFontVariant
+
+  // const out = { fontStyle, fontWeight, fontVariant, fontSize, fontFamily }
+  // if (lineHeight !== undefined) out.lineHeight = lineHeight
+
+  // return out
+  return {
+    fontStyle: defaultFontStyle,
+    fontWeight: defaultFontWeight,
+    fontVariant: defaultFontVariant,
+    fontSize: '1rem',
+    fontFamily: 'headline',
   }
-
-  const fontSize = tokenStream.expect(LENGTH, UNSUPPORTED_LENGTH_UNIT)
-
-  if (tokenStream.matches(SLASH)) {
-    lineHeight = tokenStream.expect(LENGTH, UNSUPPORTED_LENGTH_UNIT)
-  }
-
-  tokenStream.expect(SPACE)
-
-  const { fontFamily } = parseFontFamily(tokenStream)
-
-  if (fontStyle === undefined) fontStyle = defaultFontStyle
-  if (fontWeight === undefined) fontWeight = defaultFontWeight
-  if (fontVariant === undefined) fontVariant = defaultFontVariant
-
-  const out = { fontStyle, fontWeight, fontVariant, fontSize, fontFamily }
-  if (lineHeight !== undefined) out.lineHeight = lineHeight
-
-  return out
 }

@@ -24,7 +24,7 @@ const matchColor = node => {
   } else if (node.type === 'function' && cssFunctionNameRe.test(node.value)) {
     return stringify(node)
   }
-  return null
+  return node.value
 }
 
 const noneRe = /^(none)$/i

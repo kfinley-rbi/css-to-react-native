@@ -7,6 +7,8 @@ import {
   NONE,
 } from '../tokenTypes'
 
+import { parseValue } from './nbMappings'
+
 export const directionFactory = ({
   types = [LENGTH, UNSUPPORTED_LENGTH_UNIT, PERCENT],
   directions = ['Top', 'Right', 'Bottom', 'Left'],
@@ -22,18 +24,32 @@ export const directionFactory = ({
     tokenStream.expect(SPACE)
     values.push(tokenStream.expect(...types))
   }
+  console.log(`>>>>>>>>>>> values: `, values)
 
   tokenStream.expectEmpty()
+
+  if (values.length === 1) {
+    return {
+      [prefix]: parseValue(values[0]),
+    }
+  }
+
+  if (values.length === 2) {
+    return {
+      [`${prefix}X`]: parseValue(values[1]),
+      [`${prefix}Y`]: parseValue(values[0]),
+    }
+  }
 
   const [top, right = top, bottom = top, left = right] = values
 
   const keyFor = n => `${prefix}${directions[n]}${suffix}`
 
   return {
-    [keyFor(0)]: top,
-    [keyFor(1)]: right,
-    [keyFor(2)]: bottom,
-    [keyFor(3)]: left,
+    [keyFor(0)]: parseValue(top),
+    [keyFor(1)]: parseValue(right),
+    [keyFor(2)]: parseValue(bottom),
+    [keyFor(3)]: parseValue(left),
   }
 }
 
