@@ -15,7 +15,7 @@ const undefinedRe = /^undefined$/i
 
 // Undocumented export
 export const transformRawValue = (propName, value) => {
-  console.log(`transformRawValue propName: `, propName, value)
+  // console.log(`transformRawValue propName: `, propName, value)
   const needsUnit = !devPropertiesWithoutUnitsRegExp.test(propName)
   const isNumberWithoutUnit = numberOnlyRe.test(value)
   if (needsUnit && isNumberWithoutUnit) {
@@ -32,7 +32,7 @@ export const transformRawValue = (propName, value) => {
 
   const numberMatch = value.match(numberOrLengthRe)
 
-  console.log(`>> numberMatch: `, numberMatch)
+  // console.log(`>> numberMatch: `, numberMatch)
   // if (numberMatch !== null) return Number(numberMatch[1])
   if (numberMatch !== null) return parseValue(numberMatch[0])
 
@@ -55,7 +55,7 @@ const baseTransformShorthandValue = (propName, value) => {
 }
 
 const transformShorthandValue = (propName, value) => {
-  console.log(`> transformShorthandValue propName: `, propName, value)
+  // console.log(`> transformShorthandValue propName: `, propName, value)
   try {
     return baseTransformShorthandValue(propName, value)
   } catch (e) {
@@ -65,14 +65,14 @@ const transformShorthandValue = (propName, value) => {
 
 export const getStylesForProperty = (propName, inputValue, allowShorthand) => {
   const isRawValue = allowShorthand === false || !(propName in transforms)
-  console.log(`> getStylesForProperty`, propName, inputValue, allowShorthand)
+  // console.log(`> getStylesForProperty`, propName, inputValue, allowShorthand)
   const value = inputValue.trim()
 
   const propValues = isRawValue
     ? { [propName]: transformRawValue(propName, value) }
     : transformShorthandValue(propName, value)
 
-  console.log(`> getStylesForProperty propValues`, propValues)
+  // console.log(`> getStylesForProperty propValues`, propValues)
 
   return propValues
 }

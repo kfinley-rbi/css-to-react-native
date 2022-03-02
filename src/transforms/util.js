@@ -24,7 +24,6 @@ export const directionFactory = ({
     tokenStream.expect(SPACE)
     values.push(tokenStream.expect(...types))
   }
-  console.log(`>>>>>>>>>>> values: `, values)
 
   tokenStream.expectEmpty()
 
