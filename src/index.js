@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 import parse from 'postcss-value-parser'
 import camelizeStyleName from 'camelize'
@@ -13,9 +14,12 @@ const boolRe = /^true|false$/i
 const nullRe = /^null$/i
 const undefinedRe = /^undefined$/i
 
+const DEBUG = true
+const debugLog = (...values) => DEBUG && console.log(...values)
+
 // Undocumented export
 export const transformRawValue = (propName, value) => {
-  // console.log(`transformRawValue propName: `, propName, value)
+  debugLog(`transformRawValue propName: `, propName, value)
   const needsUnit = !devPropertiesWithoutUnitsRegExp.test(propName)
   const isNumberWithoutUnit = numberOnlyRe.test(value)
   if (needsUnit && isNumberWithoutUnit) {
@@ -32,7 +36,8 @@ export const transformRawValue = (propName, value) => {
 
   const numberMatch = value.match(numberOrLengthRe)
 
-  // console.log(`>> numberMatch: `, numberMatch)
+  debugLog(`>> numberMatch: `, numberMatch)
+
   // if (numberMatch !== null) return Number(numberMatch[1])
   if (numberMatch !== null) return parseValue(numberMatch[0])
 
@@ -55,7 +60,7 @@ const baseTransformShorthandValue = (propName, value) => {
 }
 
 const transformShorthandValue = (propName, value) => {
-  // console.log(`> transformShorthandValue propName: `, propName, value)
+  debugLog(`> transformShorthandValue propName: `, propName, value)
   try {
     return baseTransformShorthandValue(propName, value)
   } catch (e) {
@@ -65,14 +70,14 @@ const transformShorthandValue = (propName, value) => {
 
 export const getStylesForProperty = (propName, inputValue, allowShorthand) => {
   const isRawValue = allowShorthand === false || !(propName in transforms)
-  // console.log(`> getStylesForProperty`, propName, inputValue, allowShorthand)
+  debugLog(`> getStylesForProperty`, propName, inputValue, allowShorthand)
   const value = inputValue.trim()
 
   const propValues = isRawValue
     ? { [propName]: transformRawValue(propName, value) }
     : transformShorthandValue(propName, value)
 
-  // console.log(`> getStylesForProperty propValues`, propValues)
+  debugLog(`> getStylesForProperty propValues`, propValues)
 
   return propValues
 }

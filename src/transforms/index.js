@@ -54,7 +54,11 @@ const textShadowOffset = tokenStream => ({
 
 export default {
   background,
-  border,
+  border: border(''),
+  borderTop: border('Top'),
+  borderBottom: border('Bottom'),
+  borderLeft: border('Left'),
+  borderRight: border('Right'),
   borderColor,
   borderRadius,
   borderWidth,

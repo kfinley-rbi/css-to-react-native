@@ -7,13 +7,15 @@ import {
   SPACE,
 } from '../tokenTypes'
 
-const BORDER_STYLE = regExpToken(/^(solid|dashed|dotted)$/)
+const BORDER_STYLE = regExpToken(
+  /^(solid|dashed|dotted|(.*?)(substitution)(.*?))$/
+)
 
 const defaultBorderWidth = 1
 const defaultBorderColor = 'black'
 const defaultBorderStyle = 'solid'
 
-export default tokenStream => {
+export default (prefix = '') => tokenStream => {
   let borderWidth
   let borderColor
   let borderStyle
@@ -49,5 +51,9 @@ export default tokenStream => {
   if (borderColor === undefined) borderColor = defaultBorderColor
   if (borderStyle === undefined) borderStyle = defaultBorderStyle
 
-  return { borderWidth, borderColor, borderStyle }
+  return {
+    [`border${prefix}Width`]: borderWidth,
+    [`border${prefix}Color`]: borderColor,
+    [`border${prefix}Style`]: borderStyle,
+  }
 }
