@@ -14,7 +14,8 @@ const boolRe = /^true|false$/i
 const nullRe = /^null$/i
 const undefinedRe = /^undefined$/i
 
-const DEBUG = true
+// const DEBUG = true
+const DEBUG = false
 const debugLog = (...values) => DEBUG && console.log(...values)
 
 // Undocumented export
