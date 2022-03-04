@@ -1,6 +1,7 @@
 import {
   IDENT,
   WORD,
+  SUB_VAR,
   COLOR,
   LENGTH,
   UNSUPPORTED_LENGTH_UNIT,
@@ -35,7 +36,7 @@ const borderRadius = directionFactory({
 })
 const borderWidth = directionFactory({ prefix: 'border', suffix: 'Width' })
 const margin = directionFactory({
-  types: [LENGTH, UNSUPPORTED_LENGTH_UNIT, PERCENT, AUTO],
+  types: [SUB_VAR, LENGTH, UNSUPPORTED_LENGTH_UNIT, PERCENT, AUTO],
   prefix: 'margin',
 })
 const padding = directionFactory({ prefix: 'padding' })

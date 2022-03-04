@@ -1,8 +1,13 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-restricted-globals */
+
 const numberOrLengthRe = /^([+-]?(?:\d*\.)?\d+(?:e[+-]?\d+)?)((?:px|rem))?$/i
+const subRe = /^(.*?)(substitution)(.*?)/i
 
 export const parseValue = value => {
+  if (String(value).match(subRe)) {
+    return value
+  }
   let v = value
   const p = String(value).match(numberOrLengthRe)
   if (p && p[1]) {

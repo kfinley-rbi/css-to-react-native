@@ -5,12 +5,13 @@ import {
   COLOR,
   SPACE,
   NONE,
+  SUB_VAR,
 } from '../tokenTypes'
 
 import { parseValue } from './nbMappings'
 
 export const directionFactory = ({
-  types = [LENGTH, UNSUPPORTED_LENGTH_UNIT, PERCENT],
+  types = [LENGTH, UNSUPPORTED_LENGTH_UNIT, PERCENT, SUB_VAR],
   directions = ['Top', 'Right', 'Bottom', 'Left'],
   prefix = '',
   suffix = '',

@@ -61,6 +61,8 @@ export const SLASH = noopToken(
 export const COMMA = noopToken(
   node => node.type === 'div' && node.value === ','
 )
+
+export const SUB_VAR = regExpToken(/^((.*?)(substitution)(.*?))$/i)
 export const WORD = valueForTypeToken('word')
 export const NONE = regExpToken(noneRe)
 export const AUTO = regExpToken(autoRe)
