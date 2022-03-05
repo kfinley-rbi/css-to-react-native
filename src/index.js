@@ -25,13 +25,13 @@ export const transformRawValue = (propName, value) => {
   const isNumberWithoutUnit = numberOnlyRe.test(value)
   if (needsUnit && isNumberWithoutUnit) {
     // eslint-disable-next-line no-console
-    console.warn(`Expected style "${propName}: ${value}" to contain units`)
+    debugLog(`Expected style "${propName}: ${value}" to contain units`)
   }
   if (!needsUnit && value !== '0' && !isNumberWithoutUnit) {
     // these are TEMP variable substitutions in the caller
     if (!value.includes('substitution__')) {
       // eslint-disable-next-line no-console
-      console.warn(`Expected style "${propName}: ${value}" to be unitless`)
+      debugLog(`Expected style "${propName}: ${value}" to be unitless`)
     }
   }
 
@@ -55,9 +55,11 @@ export const transformRawValue = (propName, value) => {
 }
 
 const baseTransformShorthandValue = (propName, value) => {
-  const ast = parse(value)
+  const ast = parse(String(value))
   const tokenStream = new TokenStream(ast.nodes)
-  return transforms[propName](tokenStream)
+  const fn = transforms[propName]
+  const res = fn(tokenStream)
+  return res
 }
 
 const transformShorthandValue = (propName, value) => {
@@ -72,7 +74,14 @@ const transformShorthandValue = (propName, value) => {
 export const getStylesForProperty = (propName, inputValue, allowShorthand) => {
   const isRawValue = allowShorthand === false || !(propName in transforms)
   debugLog(`> getStylesForProperty`, propName, inputValue, allowShorthand)
-  const value = inputValue.trim()
+  let value = inputValue
+  try {
+    if (typeof inputValue === 'string') {
+      value = inputValue.trim()
+    }
+  } catch (err) {
+    throw new Error(`inputValue: ${propName}: ${inputValue}`)
+  }
 
   const propValues = isRawValue
     ? { [propName]: transformRawValue(propName, value) }
