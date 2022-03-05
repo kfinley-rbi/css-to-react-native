@@ -15,6 +15,8 @@ export const directionFactory = ({
   directions = ['Top', 'Right', 'Bottom', 'Left'],
   prefix = '',
   suffix = '',
+  allowSingle = false,
+  convertToNB = false,
 }) => tokenStream => {
   const values = []
 
@@ -28,16 +30,16 @@ export const directionFactory = ({
 
   tokenStream.expectEmpty()
 
-  if (values.length === 1) {
+  if (allowSingle && values.length === 1) {
     return {
-      [prefix]: parseValue(values[0]),
+      [prefix]: parseValue(values[0], convertToNB),
     }
   }
 
-  if (values.length === 2) {
+  if (allowSingle && values.length === 2) {
     return {
-      [`${prefix}X`]: parseValue(values[1]),
-      [`${prefix}Y`]: parseValue(values[0]),
+      [`${prefix}X`]: parseValue(values[1], convertToNB),
+      [`${prefix}Y`]: parseValue(values[0], convertToNB),
     }
   }
 
@@ -46,10 +48,10 @@ export const directionFactory = ({
   const keyFor = n => `${prefix}${directions[n]}${suffix}`
 
   return {
-    [keyFor(0)]: parseValue(top),
-    [keyFor(1)]: parseValue(right),
-    [keyFor(2)]: parseValue(bottom),
-    [keyFor(3)]: parseValue(left),
+    [keyFor(0)]: parseValue(top, convertToNB),
+    [keyFor(1)]: parseValue(right, convertToNB),
+    [keyFor(2)]: parseValue(bottom, convertToNB),
+    [keyFor(3)]: parseValue(left, convertToNB),
   }
 }
 

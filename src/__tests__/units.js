@@ -4,9 +4,9 @@ import transformCss from '..'
 // https://developer.mozilla.org/en-US/docs/Web/CSS/length
 const lengthUnits = [
   'ch',
-  'em',
+  // 'em',
   'ex',
-  'rem',
+  // 'rem',
   'vh',
   'vw',
   'vmin',
@@ -23,34 +23,23 @@ lengthUnits.forEach(unit => {
 
   it('allows CSS length units in transformed values', () => {
     expect(transformCss([['margin', value]])).toEqual({
-      marginTop: value,
-      marginRight: value,
-      marginBottom: value,
-      marginLeft: value,
+      margin: value,
     })
     expect(transformCss([['padding', value]])).toEqual({
-      paddingTop: value,
-      paddingRight: value,
-      paddingBottom: value,
-      paddingLeft: value,
+      padding: value,
     })
   })
 
   it('allows CSS length units with 0 and unit', () => {
     expect(transformCss([['padding', `0${unit}`]])).toEqual({
-      paddingTop: `0${unit}`,
-      paddingRight: `0${unit}`,
-      paddingBottom: `0${unit}`,
-      paddingLeft: `0${unit}`,
+      padding: `0${unit}`,
     })
   })
 
   it('allows mixed units in transformed values', () => {
     expect(transformCss([['margin', `10px ${value}`]])).toEqual({
-      marginTop: 10,
-      marginRight: value,
-      marginBottom: 10,
-      marginLeft: value,
+      marginX: value,
+      marginY: '$2.5',
     })
   })
 

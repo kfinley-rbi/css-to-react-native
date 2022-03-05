@@ -38,8 +38,14 @@ const borderWidth = directionFactory({ prefix: 'border', suffix: 'Width' })
 const margin = directionFactory({
   types: [SUB_VAR, LENGTH, UNSUPPORTED_LENGTH_UNIT, PERCENT, AUTO],
   prefix: 'margin',
+  convertToNB: true,
+  allowSingle: true,
 })
-const padding = directionFactory({ prefix: 'padding' })
+const padding = directionFactory({
+  prefix: 'padding',
+  convertToNB: true,
+  allowSingle: true,
+})
 const fontVariant = tokenStream => ({
   fontVariant: [tokenStream.expect(IDENT)],
 })

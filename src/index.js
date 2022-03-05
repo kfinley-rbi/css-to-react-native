@@ -14,6 +14,8 @@ const boolRe = /^true|false$/i
 const nullRe = /^null$/i
 const undefinedRe = /^undefined$/i
 
+const PropsToConvertToNB = ['margin', 'padding']
+
 // const DEBUG = true
 const DEBUG = false
 const debugLog = (...values) => DEBUG && console.log(...values)
@@ -37,10 +39,9 @@ export const transformRawValue = (propName, value) => {
 
   const numberMatch = value.match(numberOrLengthRe)
 
-  debugLog(`>> numberMatch: `, numberMatch)
+  const convertToNB = PropsToConvertToNB.some(v => propName.includes(v))
 
-  // if (numberMatch !== null) return Number(numberMatch[1])
-  if (numberMatch !== null) return parseValue(numberMatch[0])
+  if (numberMatch !== null) return parseValue(numberMatch[0], convertToNB)
 
   const boolMatch = value.match(boolRe)
   if (boolMatch !== null) return boolMatch[0].toLowerCase() === 'true'

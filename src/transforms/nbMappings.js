@@ -4,7 +4,7 @@
 const numberOrLengthRe = /^([+-]?(?:\d*\.)?\d+(?:e[+-]?\d+)?)((?:px|rem))?$/i
 const subRe = /^(.*?)(substitution)(.*?)/i
 
-export const parseValue = value => {
+export const parseValue = (value, convertToNB) => {
   if (String(value).match(subRe)) {
     return value
   }
@@ -18,16 +18,20 @@ export const parseValue = value => {
         v = Math.floor(asNum * 16)
       }
     } else {
-      v = p[1]
+      v = parseFloat(p[1], 10)
     }
   }
-  // eslint-disable-next-line no-use-before-define
-  const nbPadding = paddingToNBmap[String(v)]
-  if (nbPadding) {
-    return nbPadding
+  if (convertToNB) {
+    // eslint-disable-next-line no-use-before-define
+    const nbPadding = paddingToNBmap[String(v)]
+    if (nbPadding) {
+      return nbPadding
+    }
+    if (String(v).match(numberOrLengthRe)) {
+      return `${v}px`
+    }
   }
-
-  return `${v}px`
+  return v
 }
 
 export const paddingToNBmap = {

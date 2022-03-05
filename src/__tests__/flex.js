@@ -41,6 +41,14 @@ it('transforms flex shorthand with 2 values of flex-grow and flex-basis (reverse
 })
 
 it('transforms flex shorthand with 1 value of flex-grow', () => {
+  expect(transformCss([['flex', '3']])).toEqual({
+    flexGrow: 3,
+    flexShrink: 1,
+    flexBasis: 0,
+  })
+})
+
+it('transforms flex shorthand with 1 value of flex-grow', () => {
   expect(transformCss([['flex', '2']])).toEqual({
     flexGrow: 2,
     flexShrink: 1,

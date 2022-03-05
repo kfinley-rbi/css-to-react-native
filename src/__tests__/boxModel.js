@@ -2,117 +2,98 @@ import transformCss from '..'
 
 it('transforms margin, padding with 1 value', () => {
   expect(transformCss([['margin', '1px']])).toEqual({
-    marginTop: 1,
-    marginRight: 1,
-    marginBottom: 1,
-    marginLeft: 1,
+    margin: '1px',
   })
   expect(transformCss([['padding', '1px']])).toEqual({
-    paddingTop: 1,
-    paddingRight: 1,
-    paddingBottom: 1,
-    paddingLeft: 1,
+    padding: '1px',
   })
 })
 
 it('transforms margin, padding with 2 values', () => {
   expect(transformCss([['margin', '1px 2px']])).toEqual({
-    marginTop: 1,
-    marginRight: 2,
-    marginBottom: 1,
-    marginLeft: 2,
+    marginX: '$0.5',
+    marginY: '1px',
   })
   expect(transformCss([['padding', '1px 2px']])).toEqual({
-    paddingTop: 1,
-    paddingRight: 2,
-    paddingBottom: 1,
-    paddingLeft: 2,
+    paddingX: '$0.5',
+    paddingY: '1px',
   })
 })
 
 it('transforms margin, padding with 3 values', () => {
   expect(transformCss([['margin', '1px 2px 3px']])).toEqual({
-    marginTop: 1,
-    marginRight: 2,
-    marginBottom: 3,
-    marginLeft: 2,
+    marginTop: '1px',
+    marginRight: '$0.5',
+    marginBottom: '3px',
+    marginLeft: '$0.5',
   })
   expect(transformCss([['padding', '1px 2px 3px']])).toEqual({
-    paddingTop: 1,
-    paddingRight: 2,
-    paddingBottom: 3,
-    paddingLeft: 2,
+    paddingTop: '1px',
+    paddingRight: '$0.5',
+    paddingBottom: '3px',
+    paddingLeft: '$0.5',
   })
 })
 
 it('transforms margin, padding with 4 values', () => {
   expect(transformCss([['margin', '1px 2px 3px 4px']])).toEqual({
-    marginTop: 1,
-    marginRight: 2,
-    marginBottom: 3,
-    marginLeft: 4,
+    marginTop: '1px',
+    marginRight: '$0.5',
+    marginBottom: '3px',
+    marginLeft: '$1',
   })
   expect(transformCss([['padding', '1px 2px 3px 4px']])).toEqual({
-    paddingTop: 1,
-    paddingRight: 2,
-    paddingBottom: 3,
-    paddingLeft: 4,
+    paddingTop: '1px',
+    paddingRight: '$0.5',
+    paddingBottom: '3px',
+    paddingLeft: '$1',
   })
 })
 
 it('transforms margin, allowing unitless zero, percentages', () => {
   expect(transformCss([['margin', '0 0% 10% 100%']])).toEqual({
-    marginTop: 0,
+    marginTop: '0',
     marginRight: '0%',
     marginBottom: '10%',
-    marginLeft: '100%',
+    marginLeft: 'full',
   })
   expect(transformCss([['padding', '0 0% 10% 100%']])).toEqual({
-    paddingTop: 0,
+    paddingTop: '0',
     paddingRight: '0%',
     paddingBottom: '10%',
-    paddingLeft: '100%',
+    paddingLeft: 'full',
   })
 })
 
 it('transforms shorthand and overrides previous values', () => {
   expect(transformCss([['margin-top', '2px'], ['margin', '1px']])).toEqual({
-    marginTop: 1,
-    marginRight: 1,
-    marginBottom: 1,
-    marginLeft: 1,
+    marginTop: '$0.5',
+    margin: '1px',
   })
 })
 
 it('transforms margin shorthand with auto', () => {
   expect(transformCss([['margin', 'auto']])).toEqual({
-    marginTop: 'auto',
-    marginRight: 'auto',
-    marginBottom: 'auto',
-    marginLeft: 'auto',
+    margin: 'auto',
   })
   expect(transformCss([['margin', '0 auto']])).toEqual({
-    marginTop: 0,
-    marginRight: 'auto',
-    marginBottom: 0,
-    marginLeft: 'auto',
+    marginX: 'auto',
+    marginY: '0',
   })
   expect(transformCss([['margin', 'auto 0']])).toEqual({
-    marginTop: 'auto',
-    marginRight: 0,
-    marginBottom: 'auto',
-    marginLeft: 0,
+    marginX: '0',
+    marginY: 'auto',
   })
   expect(transformCss([['margin', '2px 3px auto']])).toEqual({
-    marginTop: 2,
-    marginRight: 3,
+    marginTop: '$0.5',
+    marginRight: '3px',
     marginBottom: 'auto',
-    marginLeft: 3,
+    marginLeft: '3px',
   })
   expect(transformCss([['margin', '10px auto 4px']])).toEqual({
-    marginTop: 10,
+    marginTop: '$2.5',
     marginRight: 'auto',
-    marginBottom: 4,
+    marginBottom: '$1',
     marginLeft: 'auto',
   })
 })
