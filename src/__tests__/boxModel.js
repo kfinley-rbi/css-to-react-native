@@ -52,13 +52,13 @@ it('transforms margin, padding with 4 values', () => {
 
 it('transforms margin, allowing unitless zero, percentages', () => {
   expect(transformCss([['margin', '0 0% 10% 100%']])).toEqual({
-    marginTop: '0',
+    marginTop: 0,
     marginRight: '0%',
     marginBottom: '10%',
     marginLeft: 'full',
   })
   expect(transformCss([['padding', '0 0% 10% 100%']])).toEqual({
-    paddingTop: '0',
+    paddingTop: 0,
     paddingRight: '0%',
     paddingBottom: '10%',
     paddingLeft: 'full',
@@ -78,10 +78,10 @@ it('transforms margin shorthand with auto', () => {
   })
   expect(transformCss([['margin', '0 auto']])).toEqual({
     marginX: 'auto',
-    marginY: '0',
+    marginY: 0,
   })
   expect(transformCss([['margin', 'auto 0']])).toEqual({
-    marginX: '0',
+    marginX: 0,
     marginY: 'auto',
   })
   expect(transformCss([['margin', '2px 3px auto']])).toEqual({

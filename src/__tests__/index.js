@@ -151,7 +151,7 @@ it('allows color values in transformed border-color values', () => {
 
 it('allows omitting units for 0', () => {
   expect(transformCss([['margin', '10px 0']])).toEqual({
-    marginX: '0',
+    marginX: 0,
     marginY: '$2.5',
   })
 })

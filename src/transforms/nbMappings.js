@@ -28,6 +28,9 @@ export const parseValue = (value, convertToNB) => {
       return nbPadding
     }
     if (String(v).match(numberOrLengthRe)) {
+      if (v === 0) {
+        return v
+      }
       return `${v}px`
     }
   }
@@ -35,7 +38,7 @@ export const parseValue = (value, convertToNB) => {
 }
 
 export const paddingToNBmap = {
-  '0': '0',
+  '0': 0,
   '2': '$0.5',
   '4': '$1',
   '6': '$1.5',

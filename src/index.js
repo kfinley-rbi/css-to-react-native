@@ -14,7 +14,7 @@ const boolRe = /^true|false$/i
 const nullRe = /^null$/i
 const undefinedRe = /^undefined$/i
 
-const PropsToConvertToNB = ['margin', 'padding']
+const PropsToConvertToNB = ['margin', 'padding', 'height', 'width']
 
 // const DEBUG = true
 const DEBUG = false
